@@ -1,11 +1,11 @@
 {
-  "name": "x-app-loader",
+  "name": "xr-app-loader",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "set NODE_ENV=production && webpack --output-filename x-app-loader.js",
-    "build-min": "set NODE_ENV=production && set COMPRESS=1 && webpack --output-filename x-app-loader.min.js",
+    "build": "set NODE_ENV=production && webpack --output-filename xr-app-loader.js",
+    "build-min": "set NODE_ENV=production && set COMPRESS=1 && webpack --output-filename xr-app-loader.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

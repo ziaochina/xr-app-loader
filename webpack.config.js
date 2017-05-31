@@ -24,7 +24,7 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, "/dist/"),
-    library: "XAppLoader",
+    library: "XRAppLoader",
     libraryTarget: "umd"
   },
 
