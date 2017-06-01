@@ -111,6 +111,39 @@ export default function requireApp(path, cb) {
 ```
 
 
+### 增加app index.js代码
+
+这个一个标准的react组件，示例代码如下
+
+```javascript
+import React,{Component} from 'react'
+
+export default class HelloWorldComponent extends Component{
+
+    componentDidMount() {
+        this.props.initView()
+    }
+
+	render(){
+		//this.props中包含所以action export的方法,以及payload当前这个app的state等
+		if(this.props.payload)
+			return (<div>{this.props.payload.get('text')}</div>)
+		else
+			return null
+	}
+}
+```
+
+- this.props属性介绍
+
+
+属性 | 说明 
+-----|-----
+action文件中export的所有方法 | component可以通过this.props.action方法名调用action文件中export的所以方法
+payload | 当前应用的状态，数据类型immutable
+
+
+
 
 
 
