@@ -56,7 +56,7 @@ path | app包路径 | string
 
 - appMiddleware redux中间件函数入参
 参数 | 说明 | 类型 | 可空
------|-----|-----
+-----|-----|-----|-----
 1参数 | app获取方法 | function | 否
 2参数 | action注入对象 | object |是
 3参数 | reducer注入对象 | object |是
