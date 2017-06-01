@@ -111,9 +111,9 @@ export default function requireApp(path, cb) {
 ```
 
 
-### 增加app index.js代码
+### 4、增加app index.js代码
 
-这个一个标准的react组件，示例代码如下
+index一个标准的react组件，示例代码如下
 
 ```javascript
 import React,{Component} from 'react'
@@ -121,6 +121,7 @@ import React,{Component} from 'react'
 export default class HelloWorldComponent extends Component{
 
     componentDidMount() {
+    	//组件加载完毕调用action的initView方法，可以没有
         this.props.initView()
     }
 
@@ -146,6 +147,26 @@ appPath | 当前app path,不包括'?'后字符串，如：apps/helloworld | stri
 appQuery | 当前app path中'?'后字符串，如：a=1 | string
 appParams | appQuery转object,如：{a:1} | object
 
+### 5、增加Action代码
+
+action纯函数化，定义component事件需要处理的一些行为方法，示例代码如下
+
+```javascript
+export function initView(){
+	//injectFuns是appMiddleware注入对象，其中最重要的一个reduce方法可以指定reducer方法名就可以调用
+	//避免redux中处理消息的很多代码
+	return injectFuns=>{
+		injectFuns.reduce('initView')
+	}
+}
+```
+
+- appMiddleware默认注入injectFuns
+
+属性 | 说明 | 数据类型
+-----|-----|-----
+reduce | reduce方法能调用reducer的方法，格式：reduce(reducer中方法名, 参数1, 参数2...)|function
+getState | getState方法能去掉当前应用的state | function 
 
 
 
