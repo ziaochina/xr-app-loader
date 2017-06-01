@@ -161,7 +161,7 @@ export function initView(){
 }
 ```
 
-- appMiddleware默认注入injectFuns
+- injectFuns是appMiddleware注入的，默认包含下面两个方法，也可以在new appMiddleware的时候自己增加
 
 属性 | 说明 | 数据类型
 -----|-----|-----
