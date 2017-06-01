@@ -139,7 +139,7 @@ export default class HelloWorldComponent extends Component{
 
 属性 | 说明 
 -----|-----
-action文件中export的所有方法 | component可以通过this.props.action方法名调用action文件中export的所以方法
+action文件中export的所有方法 | component可以通过this.props.action方法名(),调用action文件中export的所有方法
 payload | 当前应用的状态，数据类型immutable
 
 
