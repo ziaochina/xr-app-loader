@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider, connect } from 'react-redux'
 import { createLogger } from 'redux-logger'
 import { Map } from 'immutable'
-import { AppLoader, appMiddleware, reducer } from '../src'
+import { AppLoader, appMiddleware, reducer } from 'xr-app-loader'
 import apps from './apps'
 
 const middleware = [appMiddleware(apps), createLogger({})]

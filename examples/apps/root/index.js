@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 
-import {AppLoader} from '../../../src'
+import {AppLoader} from 'xr-app-loader'
 
 export default class HelloWorldComponent extends Component{
    
