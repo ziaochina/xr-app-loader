@@ -24,7 +24,11 @@ $ npm start
 
 ## 开始使用
 
-### 1、项目主index.js增加代码
+### 1、npm install
+
+npm install xr-app-loader --save
+
+### 2、项目主index.js增加代码
 
 如下程序
 ```javascript
@@ -69,7 +73,7 @@ path | app包路径 | string
 
 
 
-### 2、创建应用
+### 3、创建应用
 
 - 创建apps目录
 
@@ -91,7 +95,7 @@ style.less //应用样式，示例中没写，如果需要自行添加，然后�
 
 ![](./images/03.PNG)
 
-### 3、创建apps.js文件
+### 4、创建apps.js文件
 
 这个文件主要作用是AppLoader加载某个path应用的时候，根据这个path确定component,action,reducer
 
@@ -116,7 +120,7 @@ export default function requireApp(path, cb) {
 ```
 
 
-### 4、增加app index.js代码
+### 5、增加app index.js代码
 
 index一个标准的react组件，示例代码如下
 
@@ -152,7 +156,7 @@ appPath | 当前app path,不包括'?'后字符串，如：apps/helloworld | stri
 appQuery | 当前app path中'?'后字符串，如：a=1 | string
 appParams | appQuery转object,如：{a:1} | object
 
-### 5、增加action代码
+### 6、增加action代码
 
 action纯函数化，定义component事件需要处理的一些行为方法，示例代码如下
 
@@ -174,7 +178,7 @@ reduce | reduce方法能调用reducer的方法，格式：reduce(reducer中方�
 getState | getState方法能取到当前应用的state | function 
 
 
-### 6、增加reducer代码
+### 7、增加reducer代码
 
 reducer纯函数化，定义修改状态的方法，由action调用
 
