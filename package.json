@@ -1,11 +1,12 @@
 {
   "name": "xr-app-loader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
-  "main": "./src/index.js",
+  "main": "./lib/index",
   "scripts": {
     "build": "set NODE_ENV=production && webpack --output-filename xr-app-loader.js",
     "build-min": "set NODE_ENV=production && set COMPRESS=1 && webpack --output-filename xr-app-loader.min.js",
+    "build-npm": "babel --stage 0 ./src -d ./lib ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
