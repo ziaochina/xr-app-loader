@@ -7,7 +7,7 @@
 - 每个app模式统一，维护性，大规模开发，项目管理更加容易
 
 
-## 实例
+## 运行example
 
 ```
 $ cd examples
@@ -16,4 +16,36 @@ $ npm start
 浏览器访问127.0.0.1:8089
 
 ```
+
+## 开始使用
+
+### 1、项目主index.js增加代码
+
+如下程序
+```javascript
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider, connect } from 'react-redux'
+import { createLogger } from 'redux-logger'
+import { Map } from 'immutable' //state数据结构采用immutable Map
+import { AppLoader, appMiddleware, reducer } from 'xp-app-loader' //主要提供了AppLoader,appMiddleware
+import apps from './apps' //需要一个apps.js描述所有应用配置
+
+//通过appMiddleware创建一个redux中间件
+const middleware = [appMiddleware(apps), createLogger({})]
+
+//创建redux仓库
+const store = createStore(reducer, Map(), applyMiddleware(...middleware))
+
+//使用AppLoader加载某个应用
+render(
+	<Provider store ={store}>
+		<AppLoader path='apps/root' />
+	</Provider>,
+	document.getElementById('app')
+)
+
+```
+
 
