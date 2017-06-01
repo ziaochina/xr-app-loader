@@ -51,6 +51,7 @@ render(
 - AppLoader主要API
 
 属性 | 说明 | 类型
+-----|-----|-----
 path | app包路径 | string
 
 
