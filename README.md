@@ -147,7 +147,7 @@ appPath | 当前app path,不包括'?'后字符串，如：apps/helloworld | stri
 appQuery | 当前app path中'?'后字符串，如：a=1 | string
 appParams | appQuery转object,如：{a:1} | object
 
-### 5、增加Action代码
+### 5、增加action代码
 
 action纯函数化，定义component事件需要处理的一些行为方法，示例代码如下
 
@@ -167,6 +167,23 @@ export function initView(){
 -----|-----|-----
 reduce | reduce方法能调用reducer的方法，格式：reduce(reducer中方法名, 参数1, 参数2...)|function
 getState | getState方法能取到当前应用的state | function 
+
+
+### 6、增加reducer代码
+
+reducer纯函数化，定义修改状态的方法，由action调用
+
+它里面所有对外的方法第一个参数是state表示旧状态，返回值是新状态
+
+示例代码如下
+
+```javascript
+import {Map} from 'immutable'
+
+export function initView(state=Map() ){
+	return state.set('text', '这是hello world app!')
+}
+```
 
 
 
