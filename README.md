@@ -51,10 +51,10 @@ render(
 ### 2、创建应用
 
 - 创建apps目录
-![](./images/readme_01.png)
+![](./images/01.png)
 
 - 在apps目录下增加具体应用目录
-![](./images/readme_02.png)
+![](./images/02.png)
 
 - app下增加文件
 
@@ -66,7 +66,7 @@ reducer.js //纯函数reducer，主要处理状态，action会调用reducer某�
 
 style.less //应用样式，示例中没写，如果需要自行添加，然后再index.js中import
 
-![](./images/readme_03.png)
+![](./images/03.png)
 
 - 创建apps.js文件
 
