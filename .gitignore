@@ -5,6 +5,7 @@ npm-debug.log*
 .lock-wscript
 dist
 node_modules
+lib
 .npm
 .dist
 .vscode

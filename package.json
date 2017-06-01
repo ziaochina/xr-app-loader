@@ -1,12 +1,13 @@
 {
   "name": "xr-app-loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "./lib/index",
   "scripts": {
     "build": "set NODE_ENV=production && webpack --output-filename xr-app-loader.js",
     "build-min": "set NODE_ENV=production && set COMPRESS=1 && webpack --output-filename xr-app-loader.min.js",
-    "build-npm": "babel --stage 0 ./src -d ./lib ",
+    "compile": "babel -d lib/ src/", //babel转译指令
+    "prepublish": "npm run compile", //在publish操作之前触发这个指令
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
