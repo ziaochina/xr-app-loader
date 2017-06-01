@@ -134,13 +134,17 @@ export default class HelloWorldComponent extends Component{
 }
 ```
 
-- this.props属性介绍
+- this.props包含属性介绍
 
 
-属性 | 说明 
------|-----
-action文件中export的所有方法 | component可以通过this.props.action方法名(),调用action文件中export的所有方法
-payload | 当前应用的状态，数据类型immutable
+属性 | 说明 | 数据类型
+-----|-----|-----
+action文件中export的所有方法 | component可以通过this.props.action方法名(),调用action文件中export的所有方法 | function
+payload | 当前应用的状态 | immutable Map
+appSource | 当前app path，如：apps/helloworld?a=1 | string
+appPath | 当前app path,不包括'?'后字符串，如：apps/helloworld | string
+appQuery | 当前app path中'?'后字符串，如：a=1 | string
+appParams | appQuery转object,如：{a:1} | object
 
 
 
