@@ -6,7 +6,6 @@ export default function requireApp(path, cb) {
             require('./apps/root/reducer'))
     }
 
-
     else if (path === 'apps/helloWorld') {
         cb( require('./apps/helloWorld/index'),
             require('./apps/helloWorld/action'),
@@ -17,6 +16,4 @@ export default function requireApp(path, cb) {
     else if(path === 'apps/about'){
         cb( require('./apps/about/index'))
     }
-
-
 }

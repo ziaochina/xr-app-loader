@@ -70,7 +70,32 @@ style.less //应用样式，示例中没写，如果需要自行添加，然后�
 
 ![](./images/03.PNG)
 
-- 创建apps.js文件
+### 3、创建apps.js文件
+
+这个文件主要作用是AppLoader加载某个path应用的时候，根据这个path确定component,action,reducer
+
+![](./images/04.PNG)
+
+内容示例：
+
+```javascript
+export default function requireApp(path, cb) {
+    
+    if(path === 'apps/root'){
+        cb( require('./apps/root/index'),
+            require('./apps/root/action'),
+            require('./apps/root/reducer'))
+    }
+
+    else if(path === 'apps/about'){
+        cb( require('./apps/about/index')) //可以没有action,reducer,说明该应用很简单不需要管理状态
+    }
+}
+
+```
+
+
+
 
 
 
