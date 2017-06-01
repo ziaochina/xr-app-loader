@@ -55,6 +55,7 @@ render(
 path | app包路径 | string
 
 - appMiddleware redux中间件函数入参
+
 参数 | 说明 | 类型 | 可空
 -----|-----|-----|-----
 1参数 | app获取方法 | function | 否
