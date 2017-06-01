@@ -166,7 +166,7 @@ export function initView(){
 属性 | 说明 | 数据类型
 -----|-----|-----
 reduce | reduce方法能调用reducer的方法，格式：reduce(reducer中方法名, 参数1, 参数2...)|function
-getState | getState方法能去掉当前应用的state | function 
+getState | getState方法能取到当前应用的state | function 
 
 
 
