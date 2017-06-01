@@ -48,6 +48,13 @@ render(
 
 ```
 
+- AppLoader主要API
+
+属性 | 说明 | 类型
+path | app包路径 | string
+
+
+
 ### 2、创建应用
 
 - 创建apps目录
