@@ -43,10 +43,15 @@ class AppLoader extends React.Component{
 	render(){
 		let { path, payload } = this.props
 
-
 		if(payload.getIn(['@@require', path]) ){
 			let ReduxConnector = payload.getIn(['@@require', path])
-			return <ReduxConnector key={path} store ={this.context.store}  ref='connector' {...this.props} />
+			return(
+				<ReduxConnector 
+					{...this.props} 
+					key={path} 
+					store ={this.context.store}
+				/>
+			)
 
 		}
 		else{
