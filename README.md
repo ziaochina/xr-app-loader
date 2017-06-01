@@ -51,9 +51,11 @@ render(
 ### 2、创建应用
 
 - 创建apps目录
+
 ![](./images/01.PNG)
 
 - 在apps目录下增加具体应用目录
+
 ![](./images/02.PNG)
 
 - app下增加文件
