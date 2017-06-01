@@ -35,7 +35,7 @@ import apps from './apps' //需要一个apps.js描述所有应用配置
 //通过appMiddleware创建一个redux中间件
 const middleware = [appMiddleware(apps), createLogger({})]
 
-//创建redux仓库
+//创建redux仓库,根reducer使用项目提供的reducer
 const store = createStore(reducer, Map(), applyMiddleware(...middleware))
 
 //使用AppLoader加载某个应用
@@ -47,5 +47,28 @@ render(
 )
 
 ```
+
+### 2、创建应用
+
+- 创建apps目录
+![](./images/readme_01.png)
+
+- 在apps目录下增加具体应用目录
+![](./images/readme_02.png)
+
+- app下增加文件
+
+index.js //纯组件,主要处理界面
+
+action.js //纯函数action，主要处理界面发起的行为，包括对外部ajax调用
+
+reducer.js //纯函数reducer，主要处理状态，action会调用reducer某个方法更新状态
+
+style.less //应用样式，示例中没写，如果需要自行添加，然后再index.js中import
+
+![](./images/readme_03.png)
+
+- 创建apps.js文件
+
 
 
