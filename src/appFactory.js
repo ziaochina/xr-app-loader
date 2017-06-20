@@ -10,7 +10,7 @@ class appFactory {
         this.apps[name] = app
     }
 
-    registerComponents(apps) {
+    registerApps(apps) {
         this.apps = {
             ...this.apps,
             ...apps

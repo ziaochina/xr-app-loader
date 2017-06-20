@@ -34,16 +34,17 @@ render(
 	document.getElementById('app')
 )*/
 
-import xrAppLoader from '../src'
+import {
+	config
+} from 'xr-app-loader'
 import rootApp from './apps/root/app'
 
-let a = xrAppLoader
-let b = rootApp
 
-debugger
 
-xrAppLoader.config({
+config({
 	apps: {
 		[rootApp.name]: rootApp
 	}
 })
+
+debugger
