@@ -1,9 +1,14 @@
-import { Map } from 'immutable'
+import {
+    Map
+} from 'immutable'
 import wrapMapStateToProps from './wrapMapStateToProps'
 import wrapMapDispatchToProps from './wrapMapDispatchToProps'
 import createReduxConnector from './createReduxConnector'
 
-export default function(state = Map(), { type, payload }) {
+export default function(state = Map(), {
+    type,
+    payload
+}) {
     switch (type) {
         case "@@loadAppReal":
             return loadApp(state, payload)
@@ -17,55 +22,66 @@ export default function(state = Map(), { type, payload }) {
 }
 
 
-function loadApp(state, { path, component = {}, action = {}, reducer = {} }) {
-    let p = path.split('?'),
-        source = path
-    path = p[0]
-    let query = p[1] || ''
-    if(!state.has(path)){
-        state = state.set(path, Map())
-        state = state.setIn([path, '@@require'], Map({ component, action, reducer }))
+function loadApp(state, {
+    fullName,
+    component = {},
+    action = {},
+    reducer = {}
+}) {
+    const p = fullName.split('?'),
+        name = p[0],
+        query = p[1] || ''
+
+    if (!state.has(name)) {
+        state = state.set(name, Map())
+        state = state.setIn([name, '@@require'], Map({
+            component,
+            action,
+            reducer
+        }))
     }
-    if (!state.getIn([path, '@@require', source])) {
+    if (!state.getIn([name, '@@require', fullName])) {
         let container = createReduxConnector(component,
-            wrapMapStateToProps(source),
-            wrapMapDispatchToProps(source, action, reducer),
+            wrapMapStateToProps(fullName),
+            wrapMapDispatchToProps(fullName, action, reducer),
             null, {
                 withRef: true,
                 pure: true
             }
         )
 
-        state = state.setIn([path, '@@require', source], container)
+        state = state.setIn([name, '@@require', fullName], container)
     }
 
-    if (query !== '' && !state.get(path).has(query)) {
-           state = state.update(path, x => x.set(query, Map()))
+    if (query !== '' && !state.get(name).has(query)) {
+        state = state.update(name, x => x.set(query, Map()))
     }
 
     return state
 }
 
-function clearAppState(state, {path}){
-    let p = path.split('?'),
-        source = path
-    path = p[0]
-    let query = p[1] || ''
-    if(!state.has(path)) return state
-    if (query !== '' && state.get(path).has(query)) {
-        state = state.update(path, x => x.set(query, Map()))
-    }
-    else{
+function clearAppState(state, {
+    fullName
+}) {
+    const p = fullName.split('?'),
+        name = p[0],
+        query = p[1] || ''
+
+    if (!state.has(name)) return state
+
+    if (query !== '' && state.get(name).has(query)) {
+        state = state.update(name, x => x.set(query, Map()))
+    } else {
         let ks = []
-        state.get(path).mapKeys(k=>{
-            if( k != '@@require'  && k.indexOf('=') == -1)
+        state.get(name).mapKeys(k => {
+            if (k != '@@require' && k.indexOf('=') == -1)
                 ks.push(k)
             return k
         })
 
-        ks.forEach(k=>{
-            if(k)
-                state = state.update(path, x=> x.remove(k))
+        ks.forEach(k => {
+            if (k)
+                state = state.update(name, x => x.remove(k))
         })
     }
     return state
@@ -73,11 +89,18 @@ function clearAppState(state, {path}){
 }
 
 
-function reduce(state, { reducer, type, payload, path, query, injectFunsForReducer }) {
-    let oldState = query !== '' ? state.getIn([path, query]) : state.get(path)
+function reduce(state, {
+    reducer,
+    type,
+    payload,
+    name,
+    query,
+    injectFunsForReducer
+}) {
+    let oldState = query !== '' ? state.getIn([name, query]) : state.get(name)
     let newState = reducer[type].apply(this, [oldState].concat(payload))
-    if(typeof newState === "function" ){
+    if (typeof newState === "function") {
         newState = newState(injectFunsForReducer)
     }
-    return query !== '' ? state.setIn([path, query], newState) : state.set(path, newState)
+    return query !== '' ? state.setIn([name, query], newState) : state.set(name, newState)
 }

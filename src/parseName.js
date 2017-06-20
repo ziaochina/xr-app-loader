@@ -1,12 +1,12 @@
-
-export default function parseURL(url) {
-	let segments = url.split('?')
-	let path = segments[0], query= segments[1] || ''
-	let params = parseQuery(query)
+export default function parseName(fullName) {
+	const segments = fullName.split('?'),
+		name = segments[0],
+		query = segments[1] || '',
+		params = parseQuery(query)
 
 	return {
-		source: url,
-		path,
+		fullName,
+		name,
 		query,
 		params
 	}

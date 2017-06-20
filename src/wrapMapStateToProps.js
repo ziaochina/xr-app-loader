@@ -1,16 +1,18 @@
-import parseUrl from './parseUrl'
-import { Map } from 'immutable'
+import parseName from './parseName'
+import {
+	Map
+} from 'immutable'
 
-export default function wrapMapStateToProps(appPath) {
-	let url = parseUrl(appPath)
+export default function wrapMapStateToProps(fullName) {
+	const parsedName = parseName(fullName)
 
 	return state => {
 		return {
-			appPath: url.path,
-			appSource: url.source,
-			appQuery: url.query,
-			appParams: url.params,
-			payload: url.query !== '' ? state.getIn([url.path, url.query]): state.get(url.path)
+			name: parsedName.name,
+			fullName: parsedName.fullName,
+			appQuery: parsedName.query,
+			appParams: parsedName.params,
+			payload: parsedName.query !== '' ? state.getIn([parsedName.name, parsedName.query]) : state.get(parsedName.name)
 		}
 	}
 }

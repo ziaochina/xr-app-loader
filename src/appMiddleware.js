@@ -1,31 +1,64 @@
-import parseUrl from './parseUrl'
+import parseName from './parseName'
+import appFactory from './appFactory'
 
-export default (apps, injectFuns, injectFunsForReducer)=>(store)=>{
+export default (apps, injectFuns, injectFunsForReducer) => (store) => {
 	return next => action => {
-		let {getState,dispatch} = store
+		const {
+			getState,
+			dispatch
+		} = store
+
 		if (typeof action === 'function') {
-			let {path, query, actionCreator, args, reducer } = action()
-			let reduce = (type, ...args) => {
+			const {
+				name,
+				query,
+				actionCreator,
+				args,
+				reducer
+			} = action()
+
+			const reduce = (type, ...args) => {
 				dispatch({
 					type: '@@reduce',
 					payload: {
-						path, query, type, reducer, payload: args, injectFunsForReducer
+						name,
+						query,
+						type,
+						reducer,
+						payload: args,
+						injectFunsForReducer
 					}
 				})
 			}
-			let getStateByApp = ()=>  query !== '' ? getState().getIn([path, query]): getState().get(path) ;
-			let a = actionCreator(...args)
-			if(typeof a === 'function')
-				a({store, reduce,getState:getStateByApp,...injectFuns})
 
-		} else if(action.type && action.type == '@@loadApp') {
-			let path = action.payload.path
-			let url = parseUrl(path)
-			apps(url.path, (component, action, reducer)=>{
-				return next({type:'@@loadAppReal', payload:{path: path, component, action, reducer}})
+			const getStateByApp = () => query !== '' ? getState().getIn([name, query]) : getState().get(name)
+			const realAction = actionCreator(...args)
+			if (typeof realAction === 'function') {
+				realAction({
+					store,
+					reduce,
+					getState: getStateByApp,
+					...injectFuns
+				})
+			}
+
+		} else if (action.type && action.type == '@@loadApp') {
+			const fullName = action.payload.fullName,
+				parsedName = parseName(fullName)
+
+			appFactory.getApp(parsedName.name).load((component, action, reducer) => {
+				return next({
+					type: '@@loadAppReal',
+					payload: {
+						fullName,
+						component,
+						action,
+						reducer
+					}
+				})
 			})
-		}
-		else{
+
+		} else {
 			return next(action)
 		}
 	}

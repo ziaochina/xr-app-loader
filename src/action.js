@@ -1,13 +1,17 @@
-export function loadApp(path){
+export function loadApp(fullName) {
 	return {
-		type:'@@loadApp',
-		payload:{path}
+		type: '@@loadApp',
+		payload: {
+			fullName
+		}
 	}
 }
 
-export function clearAppState(path){
+export function clearAppState(fullName) {
 	return {
-		type:'@@clearAppState',
-		payload:{path}
+		type: '@@clearAppState',
+		payload: {
+			fullName
+		}
 	}
 }

@@ -1,78 +1,99 @@
 import React from 'react'
-import { Map } from 'immutable'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import {
+	Map
+} from 'immutable'
+import {
+	connect
+} from 'react-redux'
+import {
+	bindActionCreators
+} from 'redux'
 import * as actions from './action'
-import parseUrl from './parseUrl'
+import parseName from './parseName'
 
-import wrapMapStateToProps from './wrapMapStateToProps'
+
 import wrapMapDispatchToProps from './wrapMapDispatchToProps'
 import createReduxConnector from './createReduxConnector'
 
-//import pureMixin from './pureMixin'
 
-
-class AppLoader extends React.Component{
-	constructor(props, context){
+class AppLoader extends React.Component {
+	constructor(props, context) {
 		super(props, context)
 	}
 
-	componentDidMount(){
-		let { path, payload } = this.props
-		if( !payload.getIn([ '@@require', path]) ){
-			this.props.loadApp(path)
+	componentDidMount() {
+		const {
+			name: fullName,
+			payload
+		} = this.props
+
+		if (!payload.getIn(['@@require', fullName])) {
+			this.props.loadApp(fullName)
 		}
 	}
 
-	componentWillReceiveProps(nextProps){
-		let { path, payload } = nextProps
-		if( !payload.getIn([ '@@require', path]) ){
-			this.props.loadApp(path)
+	componentWillReceiveProps(nextProps) {
+		const {
+			name: fullName,
+			payload
+		} = nextProps
+
+		if (!payload.getIn(['@@require', fullName])) {
+			this.props.loadApp(fullName)
 		}
 	}
+
 	//cxb效率优化点，由主动更新变更为状态比较更新?
-	shouldComponentUpdate(nextProps, nextState){
-    	return true
-    }
+	shouldComponentUpdate(nextProps, nextState) {
+		return true
+	}
 
-    componentWillUnmount(){
-    	let { path, payload } = this.props
-    	this.props.clearAppState(path)
-    }
+	componentWillUnmount() {
+		const {
+			name: fullName,
+			payload
+		} = this.props
 
-	render(){
-		let { path, payload } = this.props
+		this.props.clearAppState(fullName)
+	}
 
-		if(payload.getIn(['@@require', path]) ){
-			let ReduxConnector = payload.getIn(['@@require', path])
-			return(
+	render() {
+		const {
+			name: fullName,
+			payload
+		} = this.props,
+			ReduxConnector = payload.getIn(['@@require', fullName])
+
+		if (ReduxConnector) {
+			return (
 				<ReduxConnector 
 					{...this.props} 
-					key={path} 
+					key={fullName} 
 					store ={this.context.store}
 				/>
 			)
 
-		}
-		else{
+		} else {
 			return null
 		}
 	}
 }
 
 AppLoader.contextTypes = {
-  	store: React.PropTypes.object
+	store: React.PropTypes.object
 }
 
 export default connect((state, props) => {
-        let url = parseUrl(props.path),
-        	payload = state.get(url.path)
-        return {
-            payload: payload || Map()
-        }
-    },
-    dispatch => ({...bindActionCreators(actions, dispatch)}), null, {
-        withRef: true,
-        pure: true
-    }
+		const parsedName = parseName(props.name),
+			payload = state.get(parsedName.name)
+
+		return {
+			payload: payload || Map()
+		}
+	},
+	dispatch => ({...bindActionCreators(actions, dispatch)
+	}), null, {
+		withRef: true,
+		pure: true
+	}
 )(AppLoader)

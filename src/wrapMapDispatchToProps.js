@@ -1,27 +1,30 @@
-import { bindActionCreators } from 'redux'
-import parseUrl from './parseUrl'
+import {
+	bindActionCreators
+} from 'redux'
+import parseName from './parseName'
 
-export default function wrapMapDispatchToProps(appPath, actionCreators, reducer){
-	let url = parseUrl(appPath)
+export default function wrapMapDispatchToProps(fullName, actionCreators, reducer) {
+	const parsedName = parseName(fullName),
+		wrapActionCreators = {},
+		keys = Object.keys(actionCreators)
 
-	var wrapActionCreators = {}
-	let keys = Object.keys(actionCreators)
 	for (let i = 0; i < keys.length; i++) {
-    	let key = keys[i]
-	   	let wrapActionCreator = wrapAction(actionCreators[key], reducer, url.path, url.query )
-	   	wrapActionCreators[key] = wrapActionCreator
+		let key = keys[i]
+		let wrapActionCreator = wrapAction(actionCreators[key], reducer, parsedName.name, parsedName.query)
+		wrapActionCreators[key] = wrapActionCreator
 	}
 
-	return dispatch=>{
-		return {...bindActionCreators(wrapActionCreators, dispatch)}
+	return dispatch => {
+		return {...bindActionCreators(wrapActionCreators, dispatch)
+		}
 	}
 }
 
-function wrapAction(actionCreator,reducer, path, query) {
+function wrapAction(actionCreator, reducer, name, query) {
 	return (...args) => {
 		return function() {
 			return {
-				path,
+				name,
 				query,
 				actionCreator,
 				reducer,
