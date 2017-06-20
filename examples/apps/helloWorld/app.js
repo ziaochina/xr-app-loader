@@ -1,11 +1,11 @@
 export default {
-	name: 'apps/root',
+	name: 'apps/helloWorld',
 	version: '0.0.1',
-	description: 'apps/root',
+	description: 'apps/helloWorld',
 	author: 'zlj',
 	load: (cb) => {
 		require.ensure([], require => {
 			cb(require('./index'), require('./action'), require('./reducer'))
-		}, 'apps-root')
+		}, 'apps-helloWorld')
 	}
 }

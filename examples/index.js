@@ -35,16 +35,21 @@ render(
 )*/
 
 import {
-	config
+	config,
+	start
 } from 'xr-app-loader'
 import rootApp from './apps/root/app'
-
-
+import helloWorldApp from './apps/helloWorld/app'
+import aboutApp from './apps/about/app'
 
 config({
 	apps: {
-		[rootApp.name]: rootApp
+		[rootApp.name]: rootApp,
+		[helloWorldApp.name]: helloWorldApp,
+		[aboutApp.name]: aboutApp
 	}
 })
+
+start('app', null, 'apps/root')
 
 debugger

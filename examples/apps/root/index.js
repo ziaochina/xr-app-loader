@@ -1,12 +1,16 @@
-import React,{Component} from 'react'
+import React, {
+	Component
+} from 'react'
 
-import {AppLoader} from 'xr-app-loader'
+import {
+	AppLoader
+} from 'xr-app-loader'
 
-export default class HelloWorldComponent extends Component{
-   
-	render(){
+export default class HelloWorldComponent extends Component {
+
+	render() {
 		let currentAppPath = this.props.payload.get('currentAppPath')
-		return(
+		return (
 			<div>
 				<a 
 					style={{textDecoration:"underline", marginRight:40}} 
@@ -18,7 +22,7 @@ export default class HelloWorldComponent extends Component{
 					onClick={this.props.aboutClick}>
 					about
 				</a>
-				{currentAppPath?<AppLoader path={currentAppPath} /> : null}
+				{currentAppPath?<AppLoader name={currentAppPath} /> : null}
 			</div>
 		)
 	}
