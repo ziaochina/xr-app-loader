@@ -1,0 +1,10 @@
+import {
+	config,
+	start
+} from 'xr-app-loader'
+
+${import-apps}
+
+${config-apps}
+
+start('app', null, '${root-app-name}')

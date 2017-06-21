@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	name: 'apps/about',
 	version: '0.0.1',
 	description: 'apps/about',
@@ -9,3 +9,4 @@ export default {
 		}, 'apps-about')
 	}
 }
+

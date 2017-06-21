@@ -34,6 +34,5 @@ module.exports = {
             loader: "babel-loader"
         }]
     },
-
     plugins: plugins
 };
