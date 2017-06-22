@@ -15,12 +15,44 @@
 ## 运行example
 
 ```
-$ cd examples
+$ cd example
 $ npm install
 $ npm start
 浏览器访问127.0.0.1:8089
 
 ```
+
+## 从头开始创建app
+
+```
+$ sudo npm i -g xr-tools
+$ xr-tools app -i helloWorld
+$ cd hellWorld
+$ xr-tools app -c -s helloWorld
+$ npm install
+$ npm start
+浏览器访问127.0.0.1:8089
+
+```
+
+##创建有嵌套关系的app(example例子是用这种方式创建的)
+```
+$ sudo npm i -g xr-tools
+$ xr-tools app -i demo
+$ cd demo/src
+$ mkdir apps
+$ cd apps
+$ xr-tools app -i about
+$ xr-tools app -i helloWorld
+$ cd ../..
+$ xr-tools app -c -s demo
+$ 修改src目录下的component.js,action.js,reducer.js可以参考example
+$ npm install
+$ npm start
+浏览器访问127.0.0.1:8089
+
+```
+
 
 ## 开始使用
 
