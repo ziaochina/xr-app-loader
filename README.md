@@ -35,7 +35,7 @@ $ npm start
 
 ```
 
-##创建有嵌套关系的app(example例子是用这种方式创建的)
+## 创建有嵌套关系的app(example例子是用这种方式创建的)
 ```
 $ sudo npm i -g xr-tools
 $ xr-tools app -i demo
@@ -53,131 +53,27 @@ $ npm start
 
 ```
 
-
-## 开始使用
-
-### 1、npm install
-
-npm install xr-app-loader --save
-
-### 2、项目主index.js增加代码
-
-如下程序
-```javascript
-import React from 'react'
-import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
-import { Provider, connect } from 'react-redux'
-import { createLogger } from 'redux-logger'
-import { Map } from 'immutable' //state数据结构采用immutable Map
-import { AppLoader, appMiddleware, reducer } from 'xp-app-loader' //主要提供了AppLoader,appMiddleware
-import apps from './apps' //需要一个apps.js描述所有应用配置
-
-//通过appMiddleware创建一个redux中间件
-const middleware = [appMiddleware(apps), createLogger({})]
-
-//创建redux仓库,根reducer使用项目提供的reducer
-const store = createStore(reducer, Map(), applyMiddleware(...middleware))
-
-//使用AppLoader加载某个应用
-render(
-	<Provider store ={store}>
-		<AppLoader path='apps/root' />
-	</Provider>,
-	document.getElementById('app')
-)
+## API
 
 ```
-
-- AppLoader组件属性
+npm install xr-app-loader --save
+```
 
 属性 | 说明 | 类型
 -----|-----|-----
-path | app包路径 | string
-
-- appMiddleware redux中间件函数入参
-
-参数 | 说明 | 类型 | 可空
------|-----|-----|-----
-1参数 | app获取方法 | function | 否
-2参数 | action注入对象 | object |是
-3参数 | reducer注入对象 | object |是
+AppLoader | app包路径 | ReactNode
+config| 配置，主要配置有使用的app | object
+start| 启动， 入口参数(targetDomId:目标domid, middlewares:redux中间件, startAppName:开始启动的app名)
 
 
+### AppLoader组件属性
 
-### 3、创建应用
-
-- 创建apps目录
-
-![](./images/01.PNG)
-
-- 在apps目录下增加具体应用目录
-
-![](./images/02.PNG)
-
-- app下增加文件
-
-index.js //纯组件,主要处理界面
-
-action.js //纯函数action，主要处理界面发起的行为，包括对外部ajax调用
-
-reducer.js //纯函数reducer，主要处理状态，action会调用reducer某个方法更新状态
-
-style.less //应用样式，示例中没写，如果需要自行添加，然后再index.js中import
-
-![](./images/03.PNG)
-
-### 4、创建apps.js文件
-
-这个文件主要作用是AppLoader加载某个path应用的时候，根据这个path确定component,action,reducer
-
-![](./images/04.PNG)
-
-内容示例：
-
-```javascript
-export default function requireApp(path, cb) {
-    
-    if(path === 'apps/root'){
-        cb( require('./apps/root/index'),
-            require('./apps/root/action'),
-            require('./apps/root/reducer'))
-    }
-
-    else if(path === 'apps/about'){
-        cb( require('./apps/about/index')) //可以没有action,reducer,说明该应用很简单不需要管理状态
-    }
-}
-
-```
+属性 | 说明 | 类型
+-----|-----|-----
+name | app名 | string
 
 
-### 5、增加app index.js代码
-
-index一个标准的react组件，示例代码如下
-
-```javascript
-import React,{Component} from 'react'
-
-export default class HelloWorldComponent extends Component{
-
-    componentDidMount() {
-    	//组件加载完毕调用action的initView方法，可以没有
-        this.props.initView()
-    }
-
-	render(){
-		//this.props中包含所以action export的方法,以及payload当前这个app的state等
-		if(this.props.payload)
-			return (<div>{this.props.payload.get('text')}</div>)
-		else
-			return null
-	}
-}
-```
-
-- this.props包含属性介绍
-
+### this.props包含属性介绍
 
 属性 | 说明 | 数据类型
 -----|-----|-----
@@ -188,7 +84,7 @@ appPath | 当前app path,不包括'?'后字符串，如：apps/helloworld | stri
 appQuery | 当前app path中'?'后字符串，如：a=1 | string
 appParams | appQuery转object,如：{a:1} | object
 
-### 6、增加action代码
+### action代码
 
 action纯函数化，定义component事件需要处理的一些行为方法，示例代码如下
 
@@ -202,7 +98,7 @@ export function initView(){
 }
 ```
 
-- injectFuns是appMiddleware注入的，默认包含下面两个方法，也可以在new appMiddleware的时候自己增加
+- injectFuns是appMiddleware注入的，默认包含下面两个方法
 
 属性 | 说明 | 数据类型
 -----|-----|-----
@@ -210,7 +106,7 @@ reduce | reduce方法能调用reducer的方法，格式：reduce(reducer中方�
 getState | getState方法能取到当前应用的state | function 
 
 
-### 7、增加reducer代码
+### reducer代码
 
 reducer纯函数化，定义修改状态的方法，由action调用
 
