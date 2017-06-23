@@ -17,4 +17,4 @@ config({
 	startAppName:'example'
 })
 
-start('app', 'example')
+start()
