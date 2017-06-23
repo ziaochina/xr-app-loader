@@ -8,6 +8,6 @@ function config(option) {
 	_option = option
 }
 
-config.current = _option
+config.get= ()=> _option
 
 export default config

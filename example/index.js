@@ -12,7 +12,9 @@ config({
 		[_src_apps_about_src.name]: _src_apps_about_src,
 		[_src_apps_helloWorld_src.name]: _src_apps_helloWorld_src,
 		[_src.name]: _src
-	}
+	},
+	targetDomId:'app',
+	startAppName:'example'
 })
 
-start('app', null, 'example')
+start('app', 'example')
