@@ -21,19 +21,25 @@ import {
 import AppLoader from './appLoader'
 import appMiddleware from './appMiddleware'
 import reducer from './reducer'
+import config from './config'
+import appFactory from './appFactory'
 
 
-export default function start(targetDomId, middlewares, startAppName) {
-	var mw = [appMiddleware()]
-	if (middlewares)
-		mw = mw.concat(middlewares)
+export default function start() {
+	
+	appFactory.registerApps(config.current.apps)
+
+	var mw = [appMiddleware(config.current.actionInjections || {}, config.current.reducerInjections || {})]
+	
+	if (config.current.middlewares)
+		mw = mw.concat(config.current.middlewares)
 
 	const store = createStore(reducer, Map(), applyMiddleware(...mw))
 
 	render(
 		<Provider store={store}>
-			<AppLoader name={startAppName} />
+			<AppLoader name={config.current.startAppName} />
 		</Provider>,
-		document.getElementById(targetDomId)
+		document.getElementById(config.current.targetDomId)
 	)
 }

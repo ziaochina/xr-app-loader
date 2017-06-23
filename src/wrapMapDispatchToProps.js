@@ -10,7 +10,9 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 
 	for (let i = 0; i < keys.length; i++) {
 		let key = keys[i]
-		let wrapActionCreator = wrapAction(actionCreators[key], reducer, parsedName.name, parsedName.query)
+		let wrapActionCreator = wrapAction(actionCreators[key], 
+			reducer, parsedName.fullName, parsedName.name, 
+			parsedName.query, parsedName.params)
 		wrapActionCreators[key] = wrapActionCreator
 	}
 
@@ -20,12 +22,14 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 	}
 }
 
-function wrapAction(actionCreator, reducer, name, query) {
+function wrapAction(actionCreator, reducer, fullName, name, query, params) {
 	return (...args) => {
 		return function() {
 			return {
+				fullName,
 				name,
 				query,
+				params,
 				actionCreator,
 				reducer,
 				args

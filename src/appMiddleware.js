@@ -1,7 +1,7 @@
 import parseName from './parseName'
 import appFactory from './appFactory'
 
-export default (apps, injectFuns, injectFunsForReducer) => (store) => {
+export default (injectFuns, injectFunsForReducer) => (store) => {
 	return next => action => {
 		const {
 			getState,
@@ -10,8 +10,10 @@ export default (apps, injectFuns, injectFunsForReducer) => (store) => {
 
 		if (typeof action === 'function') {
 			const {
+				fullName,
 				name,
 				query,
+				params,
 				actionCreator,
 				args,
 				reducer
@@ -35,6 +37,7 @@ export default (apps, injectFuns, injectFunsForReducer) => (store) => {
 			const realAction = actionCreator(...args)
 			if (typeof realAction === 'function') {
 				realAction({
+					currentApp:{fullName, name, query, params},
 					store,
 					reduce,
 					getState: getStateByApp,
