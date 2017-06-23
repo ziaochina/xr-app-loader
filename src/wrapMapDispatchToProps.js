@@ -9,7 +9,12 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 		keys = Object.keys(actionCreators)
 
 	for (let i = 0; i < keys.length; i++) {
+
 		let key = keys[i]
+		
+		if(key="directFuns")
+			continue
+
 		let wrapActionCreator = wrapAction(actionCreators[key], 
 			reducer, parsedName.fullName, parsedName.name, 
 			parsedName.query, parsedName.params)
@@ -17,8 +22,7 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 	}
 
 	return dispatch => {
-		return {...bindActionCreators(wrapActionCreators, dispatch)
-		}
+		return {...bindActionCreators(wrapActionCreators, dispatch), ...(actionCreators.directFuns || {}) }
 	}
 }
 

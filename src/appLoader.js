@@ -11,11 +11,6 @@ import {
 import * as actions from './action'
 import parseName from './parseName'
 
-
-import wrapMapDispatchToProps from './wrapMapDispatchToProps'
-import createReduxConnector from './createReduxConnector'
-
-
 class AppLoader extends React.Component {
 	constructor(props, context) {
 		super(props, context)
