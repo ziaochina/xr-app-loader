@@ -34,24 +34,7 @@ export default (actionInjections, reducerInjections) => (store) => {
 			}
 
 			const getStateByApp = () => query !== '' ? getState().getIn([name, query]) : getState().get(name)
-			const realAction = actionCreator(
-				...args,
-				injections={
-					currentApp:{
-						fullName,
-						name,
-						query,
-						params
-					},
-					store,
-					reduce,
-					getState: getStateByApp,
-					...actionInjections
-				}
-			)
-
-		if (typeof realAction === 'function') {
-			realAction({
+			const injections = {
 				currentApp: {
 					fullName,
 					name,
@@ -62,27 +45,34 @@ export default (actionInjections, reducerInjections) => (store) => {
 				reduce,
 				getState: getStateByApp,
 				...actionInjections
+			}
+			const realAction = actionCreator(
+				...args,
+				injections
+			)
+
+			if (typeof realAction === 'function') {
+				realAction(injections)
+			}
+
+		} else if (action.type && action.type == '@@loadApp') {
+			const fullName = action.payload.fullName,
+				parsedName = parseName(fullName)
+
+			appFactory.getApp(parsedName.name).load((component, action, reducer) => {
+				return next({
+					type: '@@loadAppReal',
+					payload: {
+						fullName,
+						component,
+						action,
+						reducer
+					}
+				})
 			})
+
+		} else {
+			return next(action)
 		}
-
-	} else if (action.type && action.type == '@@loadApp') {
-		const fullName = action.payload.fullName,
-			parsedName = parseName(fullName)
-
-		appFactory.getApp(parsedName.name).load((component, action, reducer) => {
-			return next({
-				type: '@@loadAppReal',
-				payload: {
-					fullName,
-					component,
-					action,
-					reducer
-				}
-			})
-		})
-
-	} else {
-		return next(action)
 	}
-}
 }
