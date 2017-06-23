@@ -23,7 +23,7 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 
 	return dispatch => {
 		return {...bindActionCreators(wrapActionCreators, dispatch), 
-			...(actionCreators.getDirectFuns || actionCreators.getDirectFuns(parsedName) ||  {}) }
+			...((actionCreators.getDirectFuns && actionCreators.getDirectFuns(parsedName)) ||  {}) }
 	}
 }
 
