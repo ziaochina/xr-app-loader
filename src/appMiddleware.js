@@ -1,7 +1,7 @@
 import parseName from './parseName'
 import appFactory from './appFactory'
 
-export default (injectFuns, injectFunsForReducer) => (store) => {
+export default (actionInjections, reducerInjections) => (store) => {
 	return next => action => {
 		const {
 			getState,
@@ -28,49 +28,61 @@ export default (injectFuns, injectFunsForReducer) => (store) => {
 						type,
 						reducer,
 						payload: args,
-						injectFunsForReducer
+						reducerInjections
 					}
 				})
 			}
 
 			const getStateByApp = () => query !== '' ? getState().getIn([name, query]) : getState().get(name)
-			const realAction = actionCreator(...{
-				...args, 
-				currentApp:{fullName, name, query, params},
-				store,
-				reduce,
-				getState: getStateByApp,
-				...injectFuns
-			})
-			
-			if (typeof realAction === 'function') {
-				realAction({
-					currentApp:{fullName, name, query, params},
+			const realAction = actionCreator(
+				...args,
+				injections={
+					currentApp:{
+						fullName,
+						name,
+						query,
+						params
+					},
 					store,
 					reduce,
 					getState: getStateByApp,
-					...injectFuns
-				})
-			}
+					...actionInjections
+				}
+			)
 
-		} else if (action.type && action.type == '@@loadApp') {
-			const fullName = action.payload.fullName,
-				parsedName = parseName(fullName)
-
-			appFactory.getApp(parsedName.name).load((component, action, reducer) => {
-				return next({
-					type: '@@loadAppReal',
-					payload: {
-						fullName,
-						component,
-						action,
-						reducer
-					}
-				})
+		if (typeof realAction === 'function') {
+			realAction({
+				currentApp: {
+					fullName,
+					name,
+					query,
+					params
+				},
+				store,
+				reduce,
+				getState: getStateByApp,
+				...actionInjections
 			})
-
-		} else {
-			return next(action)
 		}
+
+	} else if (action.type && action.type == '@@loadApp') {
+		const fullName = action.payload.fullName,
+			parsedName = parseName(fullName)
+
+		appFactory.getApp(parsedName.name).load((component, action, reducer) => {
+			return next({
+				type: '@@loadAppReal',
+				payload: {
+					fullName,
+					component,
+					action,
+					reducer
+				}
+			})
+		})
+
+	} else {
+		return next(action)
 	}
+}
 }
