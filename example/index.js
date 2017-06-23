@@ -13,7 +13,10 @@ config({
 		[_src_apps_helloWorld_src.name]: _src_apps_helloWorld_src,
 		[_src.name]: _src
 	},
-	targetDomId:'app',
+	middlewares:[], //redux中间件
+	actionInjections:{},//action注入
+	reducerInjections:{},//reducer注入
+	targetDomId:'app', 
 	startAppName:'example'
 })
 
