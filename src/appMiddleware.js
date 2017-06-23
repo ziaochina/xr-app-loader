@@ -34,7 +34,15 @@ export default (injectFuns, injectFunsForReducer) => (store) => {
 			}
 
 			const getStateByApp = () => query !== '' ? getState().getIn([name, query]) : getState().get(name)
-			const realAction = actionCreator(...args, ...injectFuns)
+			const realAction = actionCreator(...{
+				...args, 
+				currentApp:{fullName, name, query, params},
+				store,
+				reduce,
+				getState: getStateByApp,
+				...injectFuns
+			})
+			
 			if (typeof realAction === 'function') {
 				realAction({
 					currentApp:{fullName, name, query, params},
