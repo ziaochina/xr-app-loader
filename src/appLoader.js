@@ -55,14 +55,17 @@ class AppLoader extends React.Component {
 	render() {
 		const {
 			name: fullName,
-			payload
+			payload,
+			...other
 		} = this.props,
+
 			ReduxConnector = payload.getIn(['@@require', fullName])
 
 		if (ReduxConnector) {
 			return (
 				<ReduxConnector 
-					{...this.props} 
+					{...other} 
+					payload = {payload}
 					key={fullName} 
 					store ={this.context.store}
 				/>
