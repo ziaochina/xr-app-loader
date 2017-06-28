@@ -27,7 +27,7 @@ $ npm start
 ```
 $ sudo npm i -g xr-tools
 $ xr-tools app -i helloWorld
-$ cd hellWorld
+$ cd helloWorld
 $ xr-tools app -c -s helloWorld
 $ npm install
 $ npm start
