@@ -37,7 +37,7 @@ export default function start() {
 		mw = mw.concat(currentConfig.middlewares)
 
 	const store = createStore(reducer, Map(), applyMiddleware(...mw))
-
+	window.reduxStore  = store
 	render(
 		<Provider store={store}>
 			<AppLoader name={currentConfig.startAppName} />
