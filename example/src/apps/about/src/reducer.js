@@ -9,6 +9,12 @@ class reducer{
 	}
 }
 
+Object.defineProperties(initView, {
+  "initView": {
+    enumerable : true
+  }
+})
+
 export default function creator(option){
 	return new reducer(option)
 }

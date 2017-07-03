@@ -16,6 +16,16 @@ class action{
 	}
 }
 
+Object.defineProperties(action, {
+  "helloWorldClick": {
+    enumerable : true
+  },
+   "aboutClick": {
+    enumerable : true
+  }
+})
+
+
 
 export default function creator(option){
 	return new action(option)

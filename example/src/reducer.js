@@ -7,6 +7,13 @@ class reducer{
 	}
 }
 
+Object.defineProperties(reducer, {
+  "setCurrentAppPath": {
+    enumerable : true
+  }
+})
+
+
 export default function creator(option){
 	return new reducer(option)
 }

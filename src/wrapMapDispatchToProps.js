@@ -6,7 +6,7 @@ import parseName from './parseName'
 export default function wrapMapDispatchToProps(fullName, actionCreators, reducer) {
 	const parsedName = parseName(fullName),
 		wrapActionCreators = {},
-		keys = Reflect.ownKeys( Reflect.getPrototypeOf(actionCreators))
+		keys = Object.keys(actionCreators)
 
 	for (let i = 0; i < keys.length; i++) {
 

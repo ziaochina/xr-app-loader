@@ -6,6 +6,12 @@ class action{
 	}
 }
 
+Object.defineProperties(action, {
+  "initView": {
+    enumerable : true
+  }
+})
+
 export default function creator(option){
 	return new action()
 }
