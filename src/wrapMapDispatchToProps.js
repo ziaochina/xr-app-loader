@@ -8,13 +8,11 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 		wrapActionCreators = {},
 		keys = Reflect.ownKeys( Reflect.getPrototypeOf(actionCreators))
 
-	keys.remove('constructor')
-
 	for (let i = 0; i < keys.length; i++) {
 
 		let key = keys[i]
 		
-		if(key === "directFuns")
+		if(key === 'directFuns' || key === 'constructor')
 			continue
 
 		let wrapActionCreator = wrapAction(actionCreators[key], 
