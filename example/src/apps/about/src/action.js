@@ -1,4 +1,4 @@
-class action(){
+class action{
 	initView(){
 		return injections => {
 			injections.reduce('initView')

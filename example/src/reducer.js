@@ -1,4 +1,4 @@
-class reducer(){
+class reducer{
 	constructor(option){
 	}
 

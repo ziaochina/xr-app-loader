@@ -27,12 +27,6 @@ module.exports = {
         extensions: [".js"],
     },
 
-     externals: {
-        "react": "React",
-        "react-dom": "ReactDom",
-        "immutable": 'Immutable'
-    },
-
 
     module: {
         loaders: [{

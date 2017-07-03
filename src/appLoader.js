@@ -59,7 +59,7 @@ class AppLoader extends React.Component {
 			...other
 		} = this.props,
 
-		ReduxConnector = payload.get('@@require').get('container')
+		ReduxConnector = payload.getIn(['@@require','container'])
 
 		if (ReduxConnector) {
 			return (

@@ -1,4 +1,4 @@
-class action(){
+class action{
 	constructor(option){
 
 	}
