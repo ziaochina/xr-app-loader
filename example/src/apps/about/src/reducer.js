@@ -9,7 +9,9 @@ class reducer{
 	}
 
 	getPublishMethods(){
-		initView:this.initView
+		return {
+			initView:this.initView
+		}
 	}
 }
 
