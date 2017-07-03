@@ -23,6 +23,7 @@ export default (actionInjections, reducerInjections) => (store) => {
 				dispatch({
 					type: '@@reduce',
 					payload: {
+						fullName,
 						name,
 						query,
 						type,
@@ -57,13 +58,16 @@ export default (actionInjections, reducerInjections) => (store) => {
 
 		} else if (action.type && action.type == '@@loadApp') {
 			const fullName = action.payload.fullName,
-				parsedName = parseName(fullName)
+				parsedName = parseName(fullName),
+				appInfo = appFactory.getApp(parsedName.name)
 
-			appFactory.getApp(parsedName.name).load((component, action, reducer) => {
+
+			appInfo.load((component, action, reducer) => {
 				return next({
 					type: '@@loadAppReal',
 					payload: {
 						fullName,
+						appInfo,
 						component,
 						action,
 						reducer

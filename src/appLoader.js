@@ -22,7 +22,7 @@ class AppLoader extends React.Component {
 			payload
 		} = this.props
 
-		if (!payload.getIn(['@@require', fullName])) {
+		if (!payload.get('@@require')) {
 			this.props.loadApp(fullName)
 		}
 	}
@@ -33,7 +33,7 @@ class AppLoader extends React.Component {
 			payload
 		} = nextProps
 
-		if (!payload.getIn(['@@require', fullName])) {
+		if (!payload.get('@@require')) {
 			this.props.loadApp(fullName)
 		}
 	}
@@ -59,7 +59,7 @@ class AppLoader extends React.Component {
 			...other
 		} = this.props,
 
-			ReduxConnector = payload.getIn(['@@require', fullName])
+		ReduxConnector = payload.get('@@require').get('container')
 
 		if (ReduxConnector) {
 			return (
@@ -82,8 +82,7 @@ AppLoader.contextTypes = {
 }
 
 export default connect((state, props) => {
-		const parsedName = parseName(props.name),
-			payload = state.get(parsedName.name)
+		const payload = state.get(props.name)
 
 		return {
 			payload: payload || Map()

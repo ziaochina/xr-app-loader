@@ -24,37 +24,31 @@ export default function(state = Map(), {
 
 function loadApp(state, {
     fullName,
+    appInfo,
     component = {},
     action = {},
     reducer = {}
 }) {
-    const p = fullName.split('?'),
-        name = p[0],
-        query = p[1] || ''
+    if(!state.has(fullName)){
+        state = state.set(fullName, Map())
+        
+        const actionInstance = action(),
+            reducerInstance = reducer(),
+            container = createReduxConnector(
+                component,
+                wrapMapStateToProps(fullName),
+                wrapMapDispatchToProps(fullName, actionInstance, reducerInstance),
+                null, { withRef: true, pure: true }
+            )
 
-    if (!state.has(name)) {
-        state = state.set(name, Map())
-        state = state.setIn([name, '@@require'], Map({
+        state = state.setIn([fullName, '@@require'], Map({
+            fullName,
+            appInfo,
             component,
-            action,
-            reducer
+            action:actionInstance,
+            reducer:reducerInstance,
+            container
         }))
-    }
-    if (!state.getIn([name, '@@require', fullName])) {
-        let container = createReduxConnector(component,
-            wrapMapStateToProps(fullName),
-            wrapMapDispatchToProps(fullName, action, reducer),
-            null, {
-                withRef: true,
-                pure: true
-            }
-        )
-
-        state = state.setIn([name, '@@require', fullName], container)
-    }
-
-    if (query !== '' && !state.get(name).has(query)) {
-        state = state.update(name, x => x.set(query, Map()))
     }
 
     return state
@@ -63,29 +57,23 @@ function loadApp(state, {
 function clearAppState(state, {
     fullName
 }) {
-    const p = fullName.split('?'),
-        name = p[0],
-        query = p[1] || ''
 
-    if (!state.has(name)) return state
+    if(!state.has(fullName))
+        return this.state
 
-    if (query !== '' && state.get(name).has(query)) {
-        state = state.update(name, x => x.set(query, Map()))
-    } else {
-        let ks = []
-        state.get(name).mapKeys(k => {
-            if (k != '@@require' && k.indexOf('=') == -1)
-                ks.push(k)
-            return k
-        })
+    const ks = []
+    state.get(fullName).mapKeys(k=>{
+        if (k != '@@require')
+            ks.push(k)
+        return k
+    })
 
-        ks.forEach(k => {
-            if (k)
-                state = state.update(name, x => x.remove(k))
-        })
-    }
+    ks.forEach(k => {
+        if (k)
+            state = state.update(name, x => x.remove(k))
+    })
+
     return state
-
 }
 
 
@@ -93,14 +81,15 @@ function reduce(state, {
     reducer,
     type,
     payload,
-    name,
-    query,
+    fullName,
     injectFunsForReducer
 }) {
-    let oldState = query !== '' ? state.getIn([name, query]) : state.get(name)
-    let newState = reducer[type].apply(this, [oldState].concat(payload))
+
+    var oldState = state.get(fullName)
+    var newState = reducer[type].apply(this, [oldState].concat(payload))
+
     if (typeof newState === "function") {
         newState = newState(injectFunsForReducer)
     }
-    return query !== '' ? state.setIn([name, query], newState) : state.set(name, newState)
+    return state.set(fullName, newState)
 }
