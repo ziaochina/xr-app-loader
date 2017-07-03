@@ -6,16 +6,16 @@ class reducer{
 	initView(state = Map()) {
 		return state.set('text', '这是helloWorld app!')
 	}
-}
 
-Object.defineProperties(reducer, {
-  "initView": {
-    enumerable : true
-  }
-})
+	getPublishMethods(){
+		return {
+			initView: this.initView
+		}
+	}
+}
 
 
 export default function creator(option){
-	return new reducer(option)
+	return new reducer(option).getPublishMethods()
 }
 

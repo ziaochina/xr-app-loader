@@ -5,15 +5,16 @@ class reducer{
 	setCurrentAppPath(state, currentAppPath) {
 		return state.set('currentAppPath', currentAppPath)
 	}
+
+	getPublishMethods(){
+		return {
+			setCurrentAppPath:this.setCurrentAppPath
+		}
+	}
 }
 
-Object.defineProperties(reducer, {
-  "setCurrentAppPath": {
-    enumerable : true
-  }
-})
 
 
 export default function creator(option){
-	return new reducer(option)
+	return new reducer(option).getPublishMethods()
 }

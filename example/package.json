@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "xr-app-loader": "^1.0.25"
+    "xr-app-loader": "^1.0.26"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

@@ -14,19 +14,16 @@ class action{
 			injections.reduce('setCurrentAppPath', 'about')	
 		}
 	}
+
+	getPublishMethods(){
+		return {
+			helloWorldClick : this.helloWorldClick,
+			aboutClick: this.aboutClick
+		}
+	}
 }
-
-Object.defineProperties(action, {
-  "helloWorldClick": {
-    enumerable : true
-  },
-   "aboutClick": {
-    enumerable : true
-  }
-})
-
 
 
 export default function creator(option){
-	return new action(option)
+	return new action(option).getPublishMethods()
 }

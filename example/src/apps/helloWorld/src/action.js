@@ -4,15 +4,15 @@ class action{
 			injections.reduce('initView')
 		}
 	}
-}
 
-Object.defineProperties(action, {
-  "initView": {
-    enumerable : true
-  }
-})
+	getPublishMethods(){
+		return {
+			initView:this.initView
+		}
+	}
+}
 
 
 export default function creator(option){
-	return new action()
+	return new action().getPublishMethods()
 }

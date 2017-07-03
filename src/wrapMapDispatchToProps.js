@@ -12,7 +12,7 @@ export default function wrapMapDispatchToProps(fullName, actionCreators, reducer
 
 		let key = keys[i]
 		
-		if(key === 'directFuns' || key === 'constructor')
+		if(key === 'directFuns')
 			continue
 
 		let wrapActionCreator = wrapAction(actionCreators[key], 
