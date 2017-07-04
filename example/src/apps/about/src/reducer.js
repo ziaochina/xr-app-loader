@@ -4,19 +4,14 @@ import {
 
 
 class reducer{
-	initView(state = Map()) {
+	initView = (state = Map()) => {
 		return state.set('text', '这是about app!')
 	}
 
-	getPublishMethods(){
-		return {
-			initView:this.initView
-		}
-	}
 }
 
 
 export default function creator(option){
-	return new reducer(option).getPublishMethods()
+	return new reducer(option)
 }
 
