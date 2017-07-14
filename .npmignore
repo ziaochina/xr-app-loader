@@ -1,5 +1,5 @@
 src
-examples
+example
 node_modules
 logs
 *.log
