@@ -70,7 +70,7 @@ function clearAppState(state, {
 
     ks.forEach(k => {
         if (k)
-            state = state.update(name, x => x.remove(k))
+            state = state.update(fullName, x => x.remove(k))
     })
 
     return state
