@@ -1,6 +1,6 @@
 {
   "name": "xr-app-loader",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "",
   "main": "./lib/index",
   "scripts": {
@@ -14,6 +14,7 @@
   "author": "zlj",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
